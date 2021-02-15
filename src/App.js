@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
+import SearchBox from './SearchBox';
+import Imagen from './Imagen.js'
+import './grid-portafolio.css'
+import './normalize.css'
+import LocationContainer from './LocationContainer.js'
+import ResidentInfo from './ResidentInfo.js'
+import Content from './content.js'
+import AxiosLocation from './AxiosLocation.js'
 
 function App() {
+
+  let url = 'https://rickandmortyapi.com/api/location/?name=Earth'
+  AxiosLocation(url);
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchBox />
+      <Content/>  
     </div>
   );
 }
