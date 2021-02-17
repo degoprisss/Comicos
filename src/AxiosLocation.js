@@ -1,38 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Content from './content.js'
+import SearchBox from './SearchBox';
 
-const AxiosLocation = (props) => {
+const AxiosLocation = () => {
+    let random = Math.floor(Math.random() * 108);
+    const [query, setQuery] = useState(random);
     const [data, setData] = useState();
     const [dataLocation, setDataLocation] = useState();
 
+    console.log(query);
+
     useEffect(() => {
-        let url = props;
-
-        axios(url)
+        axios(`https://rickandmortyapi.com/api/location/${query}/`)
             .then((dataApi) => {
-                let arrResidents = dataApi.data.results[0].residents;
                 let arrCharacters = [];
-                let arrLocation = dataApi.data.results[0];
-
-                
+                let arrResidents = dataApi.data.residents;
+                let arrLocation = dataApi.data;
                 for (let index = 0; index < 10; index++) {
                     arrCharacters.push(arrResidents[index])
                 }
+
                 setData(arrCharacters);
                 setDataLocation(arrLocation);
 
             });
-            
-    }, []);
 
-    Content(data);  
+    }, [query]);
 
-    useEffect(() => {
-        // console.log(data) urls para buscar los personajes 
-        // console.log(dataLocation) Localizacion 
-    }, [data, dataLocation])
-    
+
+
+    const handleSearch = (value, setSearchTerm) => {
+        if (value != undefined) {
+            setQuery(value);
+            setSearchTerm("");
+        };
+      };
+
+    return (
+        <div>
+            <SearchBox handleSearchTerm={handleSearch}/>
+            {data === undefined && dataLocation === undefined ? 'Error5' : <Content dat={data} dataLoca={dataLocation} />}
+        </div>
+
+    )
+
 }
 
 export default AxiosLocation;

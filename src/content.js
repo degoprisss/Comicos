@@ -2,28 +2,28 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Imagen from './Imagen.js'
 import ResidentInfo from './ResidentInfo.js'
+import LocationContainer from './LocationContainer.js'
 
-const Content = (props) => {
+
+const Content = ({dat, dataLoca}) => {
     const [dataCharacter, setDataCharacters] = useState(undefined);
     const [renderImage, setRenderImagen] = useState(undefined)
+    
     useEffect(() => {
         let newArray = [];
-        if (props != undefined) {
-            for (let index = 0; index < props.length; index++) {
-                axios(props[index])
-                    .then((data) => {
-                        newArray.push(data)
-                        setDataCharacters(newArray);
-                    })
-            }
+        if (dat != undefined) {
+        for (let index = 0; index < 10; index++) {
+            axios(`${dat[index]}`)
+                .then((data) => {
+                    newArray.push(data)
+                    setDataCharacters(newArray);
+                })
         }
-
-    }, [props]);
-
-
+    }
+    }, [dat, dataLoca])
 
     useEffect(() => {
-        console.log(dataCharacter)
+        
         let render;
         if (dataCharacter != undefined) {
             render = dataCharacter.map((value, index) => (
@@ -31,26 +31,24 @@ const Content = (props) => {
                     <div className="container col-lg-5 col-md-9">
                         <Imagen url={value.data.image} />
                         <div className="containerLocation col-sm-10 col-lg-6">
-                            {/* <LocationContainer location={dataLocation}/> */}
-                            <ResidentInfo name={value.data.name} origin={value.data.origin.name} />
+                            <LocationContainer name={dataLoca.name} type={dataLoca.type} dimension={dataLoca.dimension}/>
+                            <ResidentInfo name={value.data.name} origin={value.data.origin.name}
+                                episodio={value.data.episode} status={value.data.status}/>
                         </div>
                     </div>
                 </div>
             )
             )
-            
+
         }
         setRenderImagen(render)
 
-    }, [props, dataCharacter])
+    }, [dat, dataCharacter, dataLoca])
 
-    useEffect(() => {
-        console.log(renderImage);
-    }, [renderImage])
 
     return (
         <div>
-            {renderImage === undefined ? 'Error' : renderImage}
+            {renderImage === undefined ? 'Error6' : renderImage}
         </div>
     )
 }
