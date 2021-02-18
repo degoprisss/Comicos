@@ -17,8 +17,13 @@ const AxiosLocation = () => {
                 let arrCharacters = [];
                 let arrResidents = dataApi.data.residents;
                 let arrLocation = dataApi.data;
-                for (let index = 0; index < 10; index++) {
-                    arrCharacters.push(arrResidents[index])
+                // console.log(arrResidents);
+                for (let index = 0; index < arrResidents.length; index++) {
+                    if (index <= 10) {
+                        arrCharacters.push(arrResidents[index])
+                    }else{
+                        break;
+                    }
                 }
 
                 setData(arrCharacters);

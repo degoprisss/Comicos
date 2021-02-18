@@ -12,13 +12,13 @@ const Content = ({dat, dataLoca}) => {
     useEffect(() => {
         let newArray = [];
         if (dat != undefined) {
-        for (let index = 0; index < 10; index++) {
-            axios(`${dat[index]}`)
-                .then((data) => {
-                    newArray.push(data)
-                    setDataCharacters(newArray);
-                })
-        }
+        dat.map((value) => {
+            axios(`${value}`)
+            .then((data) => {
+                newArray.push(data)
+                setDataCharacters(newArray)
+            })
+        })
     }
     }, [dat, dataLoca])
 
